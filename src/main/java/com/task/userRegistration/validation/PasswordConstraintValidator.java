@@ -1,4 +1,4 @@
-package com.task.userRegistration.utils;
+package com.task.userRegistration.validation;
 
 import com.google.common.base.Joiner;
 import org.passay.*;
@@ -20,11 +20,6 @@ public class PasswordConstraintValidator implements ConstraintValidator<ValidPas
                 new UppercaseCharacterRule(1),
                 new LowercaseCharacterRule(1),
                 new DigitCharacterRule(1)));
-//                new SpecialCharacterRule(1),
-//                new NumericalSequenceRule(3,false),
-//                new AlphabeticalSequenceRule(3,false),
-//                new QwertySequenceRule(3,false),
-//                new WhitespaceRule()));
 
         RuleResult result = validator.validate(new PasswordData(password));
         if (result.isValid()) {

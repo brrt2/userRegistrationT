@@ -1,8 +1,6 @@
 package com.task.userRegistration.model;
 
-import com.task.userRegistration.utils.ValidPassword;
-import org.checkerframework.common.aliasing.qual.Unique;
-
+import com.task.userRegistration.validation.ValidPassword;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

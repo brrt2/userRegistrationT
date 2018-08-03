@@ -1,4 +1,4 @@
-package com.task.userRegistration.utils;
+package com.task.userRegistration.validation;
 
 import javax.validation.Payload;
 import javax.validation.Constraint;

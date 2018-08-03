@@ -32,14 +32,13 @@ public class UserController {
     @RequestMapping(value = "/users", method = RequestMethod.POST)
     public String saveUser(@ModelAttribute @Valid User user, Errors errors, Model model) {
 
-        User user1 = userRepository.findByUsername(user.getUsername());
+        User retrievedUser = userRepository.findByUsername(user.getUsername());
 
-        if (user1 != null) {
+        if (retrievedUser != null) {
             errors.rejectValue("username","error.username","Username already exists !");
         }
 
         if (errors.hasErrors()) {
-            model.addAttribute("title", "Add User");
             return "createUser";
         }
 
