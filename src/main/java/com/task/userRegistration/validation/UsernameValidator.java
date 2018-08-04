@@ -1,23 +1,24 @@
 package com.task.userRegistration.validation;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
 import org.passay.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.stereotype.Component;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Properties;
 
 
-
-@PropertySource("classpath:messages.properties")
 public class UsernameValidator implements ConstraintValidator<ValidUsername, String> {
 
-    Logger logger = LogManager.getLogger(UsernameValidator.class);
+
 
     @Override
     public void initialize(ValidUsername validUsername) {
@@ -28,11 +29,12 @@ public class UsernameValidator implements ConstraintValidator<ValidUsername, Str
     public boolean isValid(String password, ConstraintValidatorContext context) {
 
         Properties props = new Properties();
-        try {
-            props.load(new FileInputStream("messages.properties"));
-        } catch (IOException e) {
-            logger.error("Exception occured : ",e);
-        }
+
+        props.put("ALLOWED_MATCH","No special characters are allowed ! ");
+        props.put("TOO_SHORT","From Program must be at least %1$s characters in length.");
+        props.put("INSUFFICIENT_UPPERCASE","It must contain at least %1$s uppercase characters.");
+        props.put("INSUFFICIENT_LOWERCASE","It must contain at least %1$s lowercase characters.");
+
         MessageResolver resolver = new PropertiesMessageResolver(props);
 
         PasswordValidator validator = new PasswordValidator(Arrays.asList(
@@ -48,10 +50,6 @@ public class UsernameValidator implements ConstraintValidator<ValidUsername, Str
                 validator.getMessages(result).get(0))
                 .addConstraintViolation();
 
-
-//        context.buildConstraintViolationWithTemplate(
-//                Joiner.on("\n").join(validator.getMessages(result)))
-//                .addConstraintViolation();
         return false;
     }
 }
