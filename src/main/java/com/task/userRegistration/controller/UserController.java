@@ -1,29 +1,30 @@
 package com.task.userRegistration.controller;
 
 import com.task.userRegistration.model.User;
-import com.task.userRegistration.repository.UserRepository;
 import com.task.userRegistration.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
+
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Controller
 public class UserController {
 
     private UserService userService;
+    private static final String USERNAME_EXISTS_MESSAGE = "This username already exists !";
 
     @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @GetMapping(value = "/")
     public String showMainPage(Model model) {
 
         User user = new User();
@@ -31,13 +32,13 @@ public class UserController {
         return "createUser";
     }
 
-    @RequestMapping(value = "/users", method = RequestMethod.POST)
-    public String saveUser(@ModelAttribute @Valid User user, Errors errors, Model model) {
+    @PostMapping(value = "/users")
+    public String saveUser(@ModelAttribute @Valid User user, Errors errors) {
 
         User retrievedUser = userService.findByUsername(user.getUsername());
 
         if (retrievedUser != null) {
-            errors.rejectValue("username","error.username","Username already exists !");
+            errors.rejectValue("username", USERNAME_EXISTS_MESSAGE);
         }
 
         if (errors.hasErrors()) {
@@ -49,11 +50,9 @@ public class UserController {
         return "redirect:userCreated";
     }
 
-    @RequestMapping(value = "/userCreated", method = RequestMethod.GET)
+    @GetMapping(value = "/userCreated")
     public String showUserCreatedPage() {
 
         return "userCreated";
     }
-
-
 }

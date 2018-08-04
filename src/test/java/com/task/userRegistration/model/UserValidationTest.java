@@ -89,39 +89,56 @@ public class UserValidationTest {
     @Test(dataProvider = "provideIncorrectPasswords")
     public void shouldFindOneConstraintValidationWhenPasswordIsIncorrect(String password) {
 
+        // Arrange
         user.setUsername(CORRECT_USERNAME);
         user.setPassword(password);
+
+        // Act
         constraintViolations = validator.validate(user);
 
+        // Assert
         Assert.assertEquals(constraintViolations.size(), 1);
     }
 
     @Test(dataProvider = "provideIncorrectUsernames")
     public void shouldFindOneConstraintValidationWhenIncorrectUsernameIsProvided(String username) {
 
+        // Arrange
         user.setUsername(username);
-        user.setPassword("January1");
+        user.setPassword(CORRECT_PASSWORD);
+
+        // Act
         constraintViolations = validator.validate(user);
 
+        // Assert
         Assert.assertEquals(constraintViolations.size(), 1);
     }
 
     @Test(dataProvider = "provideIncorrectPasswordsAndUsernames")
     public void shouldSignalTwoConstraintValidationsWhenIncorrectUsernameAndPasswordAreProvided(String username,
-                                                                                                String password) {
+                                                                                                    String password) {
+        // Arrange
         user.setUsername(username);
         user.setPassword(password);
+
+        // Act
         constraintViolations = validator.validate(user);
 
+        // Assert
         Assert.assertEquals(constraintViolations.size(), 2);
     }
 
     @Test(dataProvider = "provideCorrectPasswordsAndUsernames")
     public void shouldFindNoConstraintValidationsWhenPasswordAndUsernameAreCorrect(String username, String password ) {
+
+       // Arrange
         user.setUsername(username);
         user.setPassword(password);
+
+        // Act
         constraintViolations = validator.validate(user);
 
+        // Assert
         Assert.assertEquals(constraintViolations.size(), 0);
     }
 

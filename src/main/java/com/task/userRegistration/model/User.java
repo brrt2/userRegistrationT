@@ -1,6 +1,8 @@
 package com.task.userRegistration.model;
 
 import com.task.userRegistration.validation.ValidPassword;
+import com.task.userRegistration.validation.ValidUsername;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,11 +18,14 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @NotNull
-    @Size(min = 5,message = "The username has to be at least 5 characters long \n")
-    @Pattern(regexp = "^[A-Za-z0-9]+$",message = "Username may only contain alphanumeric values \n")
+
+
+//    @NotNull
+//    @Size(min = 5,message = "The username has to be at least 5 characters long \n")
+//    @Pattern(regexp = "^[A-Za-z0-9]+$",message = "Username may only contain alphanumeric values \n")
+    @ValidUsername
     private String username;
-    @NotNull
+
     @ValidPassword
     private String password;
 

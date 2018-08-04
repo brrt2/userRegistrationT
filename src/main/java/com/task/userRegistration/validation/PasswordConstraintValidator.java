@@ -1,6 +1,5 @@
 package com.task.userRegistration.validation;
 
-import com.google.common.base.Joiner;
 import org.passay.*;
 
 import javax.validation.ConstraintValidator;
@@ -27,8 +26,13 @@ public class PasswordConstraintValidator implements ConstraintValidator<ValidPas
         }
         context.disableDefaultConstraintViolation();
         context.buildConstraintViolationWithTemplate(
-                Joiner.on("\n").join(validator.getMessages(result)))
-                .addConstraintViolation();
+                validator.getMessages(result).get(0))
+              .addConstraintViolation();
+
+
+//        context.buildConstraintViolationWithTemplate(
+//                Joiner.on("\n").join(validator.getMessages(result)))
+//                .addConstraintViolation();
         return false;
     }
 }
