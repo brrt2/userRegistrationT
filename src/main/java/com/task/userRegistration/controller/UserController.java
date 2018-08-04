@@ -2,6 +2,7 @@ package com.task.userRegistration.controller;
 
 import com.task.userRegistration.model.User;
 import com.task.userRegistration.repository.UserRepository;
+import com.task.userRegistration.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,15 +15,15 @@ import javax.validation.Valid;
 @Controller
 public class UserController {
 
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Autowired
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String showMainpage(Model model) {
+    public String showMainPage(Model model) {
 
         User user = new User();
         model.addAttribute("user", user);
@@ -32,7 +33,7 @@ public class UserController {
     @RequestMapping(value = "/users", method = RequestMethod.POST)
     public String saveUser(@ModelAttribute @Valid User user, Errors errors, Model model) {
 
-        User retrievedUser = userRepository.findByUsername(user.getUsername());
+        User retrievedUser = userService.findByUsername(user.getUsername());
 
         if (retrievedUser != null) {
             errors.rejectValue("username","error.username","Username already exists !");
@@ -42,7 +43,8 @@ public class UserController {
             return "createUser";
         }
 
-        userRepository.save(user);
+        userService.saveUser(user);
+
         return "userCreated";
     }
 

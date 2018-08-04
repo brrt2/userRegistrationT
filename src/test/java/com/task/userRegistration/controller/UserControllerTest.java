@@ -15,7 +15,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
 @SpringBootTest
 @AutoConfigureMockMvc
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -23,6 +22,8 @@ public class UserControllerTest {
 
     private static final String VALID_PASSWORD = "Administrator123";
     private static final String INVALID_PASSWORD = "letmein";
+    private static final String VALID_USERNAME = "bartek";
+    private static final String INVALID_USERNAME = "%invalidUser!";
 
     @Autowired
     private MockMvc mockMvc;
@@ -32,7 +33,7 @@ public class UserControllerTest {
         this.mockMvc
                 .perform(
                         post("/users")
-                                .param("username", "bartosz")
+                                .param("username", INVALID_USERNAME)
                                 .param("password", INVALID_PASSWORD)
 
                 )
@@ -43,11 +44,11 @@ public class UserControllerTest {
 
 
     @Test
-    public void shouldRedirectToUserCreatedPageWhenValidationIsSuccessful() throws Exception {
+    public void shouldDetectNoErrorsWhenInputIsCorrect() throws Exception {
         this.mockMvc
                 .perform(
                         post("/users")
-                                .param("username", "bartosz")
+                                .param("username", VALID_USERNAME)
                                 .param("password", VALID_PASSWORD)
                         
                 )
