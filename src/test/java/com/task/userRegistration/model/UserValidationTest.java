@@ -14,6 +14,9 @@ import java.util.Set;
 
 public class UserValidationTest {
 
+    private static final String CORRECT_PASSWORD = "January1";
+    private static final String CORRECT_USERNAME = "bartek";
+
     private static ValidatorFactory factory;
     private static Validator validator;
     private User user;
@@ -83,17 +86,14 @@ public class UserValidationTest {
         };
     }
 
-
-
     @Test(dataProvider = "provideIncorrectPasswords")
     public void shouldFindOneConstraintValidationWhenPasswordIsIncorrect(String password) {
 
-        user.setUsername("bartek");
+        user.setUsername(CORRECT_USERNAME);
         user.setPassword(password);
         constraintViolations = validator.validate(user);
 
         Assert.assertEquals(constraintViolations.size(), 1);
-        Assert.assertNotEquals(2, constraintViolations.size());
     }
 
     @Test(dataProvider = "provideIncorrectUsernames")
@@ -104,7 +104,6 @@ public class UserValidationTest {
         constraintViolations = validator.validate(user);
 
         Assert.assertEquals(constraintViolations.size(), 1);
-        Assert.assertNotEquals(2, constraintViolations.size());
     }
 
     @Test(dataProvider = "provideIncorrectPasswordsAndUsernames")
@@ -115,7 +114,6 @@ public class UserValidationTest {
         constraintViolations = validator.validate(user);
 
         Assert.assertEquals(constraintViolations.size(), 2);
-        Assert.assertNotEquals(1, constraintViolations.size());
     }
 
     @Test(dataProvider = "provideCorrectPasswordsAndUsernames")
@@ -125,7 +123,6 @@ public class UserValidationTest {
         constraintViolations = validator.validate(user);
 
         Assert.assertEquals(constraintViolations.size(), 0);
-        Assert.assertNotEquals(1, constraintViolations.size());
     }
 
 }

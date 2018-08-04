@@ -24,35 +24,65 @@ public class UserControllerTest {
     private static final String INVALID_PASSWORD = "letmein";
     private static final String VALID_USERNAME = "bartek";
     private static final String INVALID_USERNAME = "%invalidUser!";
+    private static final String USERNAME_ARGUMENT = "username";
+    private static final String PASSWORD_ARGUMENT = "password";
 
     @Autowired
     private MockMvc mockMvc;
 
     @Test
-    public void shouldDetectErrorsWhenIncorrectInputIsProvided() throws Exception {
+    public void shouldDetectTwoErrorsWhenUsernameAndPasswordAreIncorrect() throws Exception {
         this.mockMvc
                 .perform(
                         post("/users")
-                                .param("username", INVALID_USERNAME)
-                                .param("password", INVALID_PASSWORD)
+                                .param(USERNAME_ARGUMENT, INVALID_USERNAME)
+                                .param(PASSWORD_ARGUMENT, INVALID_PASSWORD)
 
                 )
                 .andExpect(model().hasErrors())
-//                .andExpect(model().attributeHasErrors("password"))
+                .andExpect(model().errorCount(2))
                 .andExpect(status().isOk());
     }
 
+    @Test
+    public void shouldDetectOneErrorWhenPasswordIsIncorrect() throws Exception {
+        this.mockMvc
+                .perform(
+                        post("/users")
+                                .param(USERNAME_ARGUMENT, VALID_USERNAME)
+                                .param(PASSWORD_ARGUMENT, INVALID_PASSWORD)
+
+                )
+                .andExpect(model().hasErrors())
+                .andExpect(model().errorCount(1))
+                .andExpect(status().isOk());
+    }
+
+
+    @Test
+    public void shouldDetectOneErrorWhenUsernameIsIncorrect() throws Exception {
+        this.mockMvc
+                .perform(
+                        post("/users")
+                                .param(USERNAME_ARGUMENT, INVALID_USERNAME)
+                                .param(PASSWORD_ARGUMENT, VALID_PASSWORD)
+
+                )
+                .andExpect(model().hasErrors())
+                .andExpect(model().errorCount(1))
+                .andExpect(status().isOk());
+    }
 
     @Test
     public void shouldDetectNoErrorsWhenInputIsCorrect() throws Exception {
         this.mockMvc
                 .perform(
                         post("/users")
-                                .param("username", VALID_USERNAME)
-                                .param("password", VALID_PASSWORD)
+                                .param(USERNAME_ARGUMENT, VALID_USERNAME)
+                                .param(PASSWORD_ARGUMENT, VALID_PASSWORD)
                         
                 )
                 .andExpect(model().hasNoErrors())
-                .andExpect(status().is2xxSuccessful());
+                .andExpect(status().is3xxRedirection());
     }
 }
