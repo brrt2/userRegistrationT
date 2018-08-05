@@ -12,6 +12,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+
 @SpringBootTest
 @AutoConfigureMockMvc
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -31,7 +32,7 @@ public class UserControllerTestI {
     public void shouldDetectTwoErrorsWhenUsernameAndPasswordAreIncorrect() throws Exception {
         this.mockMvc
                 .perform(
-                        post("/users")
+                        post("/registration/users")
                                 .param(USERNAME_ARGUMENT, INVALID_USERNAME)
                                 .param(PASSWORD_ARGUMENT, INVALID_PASSWORD)
 
@@ -45,7 +46,7 @@ public class UserControllerTestI {
     public void shouldDetectOneErrorWhenPasswordIsIncorrect() throws Exception {
         this.mockMvc
                 .perform(
-                        post("/users")
+                        post("/registration/users")
                                 .param(USERNAME_ARGUMENT, VALID_USERNAME)
                                 .param(PASSWORD_ARGUMENT, INVALID_PASSWORD)
 
@@ -60,7 +61,7 @@ public class UserControllerTestI {
     public void shouldDetectOneErrorWhenUsernameIsIncorrect() throws Exception {
         this.mockMvc
                 .perform(
-                        post("/users")
+                        post("/registration/users")
                                 .param(USERNAME_ARGUMENT, INVALID_USERNAME)
                                 .param(PASSWORD_ARGUMENT, VALID_PASSWORD)
 
@@ -74,7 +75,7 @@ public class UserControllerTestI {
     public void shouldDetectNoErrorsWhenInputIsCorrect() throws Exception {
         this.mockMvc
                 .perform(
-                        post("/users")
+                        post("/registration/users")
                                 .param(USERNAME_ARGUMENT, VALID_USERNAME)
                                 .param(PASSWORD_ARGUMENT, VALID_PASSWORD)
                         
@@ -88,7 +89,7 @@ public class UserControllerTestI {
 
         this.mockMvc
                 .perform(
-                        post("/users")
+                        post("/registration/users")
                                 .param(USERNAME_ARGUMENT, VALID_USERNAME)
                                 .param(PASSWORD_ARGUMENT, VALID_PASSWORD)
 
@@ -96,7 +97,7 @@ public class UserControllerTestI {
 
         this.mockMvc
                 .perform(
-                        post("/users")
+                        post("/registration/users")
                                 .param(USERNAME_ARGUMENT, VALID_USERNAME)
                                 .param(PASSWORD_ARGUMENT, VALID_PASSWORD)
 

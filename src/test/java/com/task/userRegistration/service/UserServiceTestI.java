@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-public class UserServiceTest {
+public class UserServiceTestI {
 
     private static final String USERNAME = "bartek";
     private static final String PASSWORD = "January1";
@@ -24,7 +24,7 @@ public class UserServiceTest {
     private UserRepository userRepository;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         userService = new UserServiceImpl(userRepository);
     }
 
