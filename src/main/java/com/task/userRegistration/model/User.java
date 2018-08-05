@@ -7,9 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+
 import java.util.Objects;
 
 @Entity
@@ -19,10 +17,6 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-
-//    @NotNull
-//    @Size(min = 5,message = "The username has to be at least 5 characters long \n")
-//    @Pattern(regexp = "^[A-Za-z0-9]+$",message = "Username may only contain alphanumeric values \n")
     @ValidUsername
     private String username;
 

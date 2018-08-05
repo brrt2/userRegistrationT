@@ -15,7 +15,7 @@ public class PasswordConstraintValidator implements ConstraintValidator<ValidPas
     @Override
     public boolean isValid(String password, ConstraintValidatorContext context) {
         PasswordValidator validator = new PasswordValidator(Arrays.asList(
-                new LengthRule(8,100),
+                new LengthRule(8, 100),
                 new UppercaseCharacterRule(1),
                 new LowercaseCharacterRule(1),
                 new DigitCharacterRule(1)));
@@ -27,12 +27,9 @@ public class PasswordConstraintValidator implements ConstraintValidator<ValidPas
         context.disableDefaultConstraintViolation();
         context.buildConstraintViolationWithTemplate(
                 validator.getMessages(result).get(0))
-              .addConstraintViolation();
+                .addConstraintViolation();
 
 
-//        context.buildConstraintViolationWithTemplate(
-//                Joiner.on("\n").join(validator.getMessages(result)))
-//                .addConstraintViolation();
         return false;
     }
 }

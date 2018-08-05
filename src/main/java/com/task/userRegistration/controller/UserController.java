@@ -16,9 +16,10 @@ import java.util.Optional;
 @Controller
 public class UserController {
 
-    private UserService userService;
     private static final String USERNAME_EXISTS_MESSAGE = "This username already exists.";
     private static final String USERNAME_EXISTS_CODE = "username.exists";
+
+    private UserService userService;
 
     @Autowired
     public UserController(UserService userService) {
@@ -39,7 +40,7 @@ public class UserController {
         User retrievedUser = userService.findByUsername(user.getUsername());
 
         if (retrievedUser != null) {
-            errors.rejectValue("username",USERNAME_EXISTS_CODE, USERNAME_EXISTS_MESSAGE);
+            errors.rejectValue("username", USERNAME_EXISTS_CODE, USERNAME_EXISTS_MESSAGE);
         }
 
         if (errors.hasErrors()) {

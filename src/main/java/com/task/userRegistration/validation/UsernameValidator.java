@@ -1,47 +1,26 @@
 package com.task.userRegistration.validation;
 
 import org.passay.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
-import org.springframework.stereotype.Component;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import java.io.FileInputStream;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Properties;
 
+import java.util.Arrays;
 
 public class UsernameValidator implements ConstraintValidator<ValidUsername, String> {
 
-
-
-    @Override
-    public void initialize(ValidUsername validUsername) {
-
-    }
+    private static final String ONLY_ALPHANUMERIC_REGEX = "^[A-Za-z0-9]+$";
+    private static final int MIN_USERNAME_LENGTH = 5;
+    private static final int MAX_USERNAME_LENGTH = 40;
 
     @Override
-    public boolean isValid(String password, ConstraintValidatorContext context) {
-
-        Properties props = new Properties();
-
-        props.put("ALLOWED_MATCH","No special characters are allowed ! ");
-        props.put("TOO_SHORT","From Program must be at least %1$s characters in length.");
-        props.put("INSUFFICIENT_UPPERCASE","It must contain at least %1$s uppercase characters.");
-        props.put("INSUFFICIENT_LOWERCASE","It must contain at least %1$s lowercase characters.");
-
-        MessageResolver resolver = new PropertiesMessageResolver(props);
+    public boolean isValid(String username, ConstraintValidatorContext context) {
 
         PasswordValidator validator = new PasswordValidator(Arrays.asList(
-                new LengthRule(5,100),
-                new AllowedRegexRule("^[A-Za-z0-9]+$")));
+                new LengthRule(MIN_USERNAME_LENGTH,MAX_USERNAME_LENGTH),
+                new AllowedRegexRule(ONLY_ALPHANUMERIC_REGEX)));
 
-        RuleResult result = validator.validate(new PasswordData(password));
+        RuleResult result = validator.validate(new PasswordData(username));
         if (result.isValid()) {
             return true;
         }

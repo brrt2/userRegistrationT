@@ -1,7 +1,5 @@
 package com.task.userRegistration.model;
 
-import com.task.userRegistration.model.User;
-import org.testng.Assert;
 import org.testng.annotations.*;
 
 import static org.testng.Assert.*;
@@ -46,7 +44,17 @@ public class UserValidationTest {
                 "abc",
                 "",
                 "-",
-                " "
+                " ",
+                "abc",
+                "PasswordWithoutDigits",
+                "ALL_UPPERCASE",
+                "all-lowercase",
+                ".",
+                "'user'",
+                "0",
+                "12345678",
+                "U+006D",
+                "U+0020"
 
         };
     }
@@ -57,7 +65,10 @@ public class UserValidationTest {
                 "@user",
                 "username@#$",
                 "-sample-",
-                "Tom&Jerry"
+                "Tom&Jerry",
+                "John_Wayne",
+                "sample-user",
+                "yet/another/user",
 
         };
     }
@@ -97,7 +108,7 @@ public class UserValidationTest {
         constraintViolations = validator.validate(user);
 
         // Assert
-        Assert.assertEquals(constraintViolations.size(), 1);
+        assertEquals(constraintViolations.size(), 1);
     }
 
     @Test(dataProvider = "provideIncorrectUsernames")
@@ -111,7 +122,7 @@ public class UserValidationTest {
         constraintViolations = validator.validate(user);
 
         // Assert
-        Assert.assertEquals(constraintViolations.size(), 1);
+        assertEquals(constraintViolations.size(), 1);
     }
 
     @Test(dataProvider = "provideIncorrectPasswordsAndUsernames")
@@ -125,7 +136,7 @@ public class UserValidationTest {
         constraintViolations = validator.validate(user);
 
         // Assert
-        Assert.assertEquals(constraintViolations.size(), 2);
+        assertEquals(constraintViolations.size(), 2);
     }
 
     @Test(dataProvider = "provideCorrectPasswordsAndUsernames")
@@ -139,7 +150,7 @@ public class UserValidationTest {
         constraintViolations = validator.validate(user);
 
         // Assert
-        Assert.assertEquals(constraintViolations.size(), 0);
+        assertEquals(constraintViolations.size(), 0);
     }
 
 }
