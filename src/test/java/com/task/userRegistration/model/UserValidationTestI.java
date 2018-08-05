@@ -10,7 +10,7 @@ import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import java.util.Set;
 
-public class UserValidationTest {
+public class UserValidationTestI {
 
     private static final String CORRECT_PASSWORD = "January1";
     private static final String CORRECT_USERNAME = "bartek";

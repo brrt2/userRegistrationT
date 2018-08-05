@@ -20,8 +20,12 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
+
     @Override
-    public User findByUsername(String username) {
-        return userRepository.findByUsername(username);
+    public boolean isUserAlreadyPresent(User user) {
+
+        User retrievedUser = userRepository.findByUsername(user.getUsername());
+
+        return retrievedUser != null;
     }
 }

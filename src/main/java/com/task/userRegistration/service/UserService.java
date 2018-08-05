@@ -6,6 +6,6 @@ public interface UserService {
 
     void saveUser(User user);
 
-    User findByUsername(String username);
+    boolean isUserAlreadyPresent(User user);
 
 }

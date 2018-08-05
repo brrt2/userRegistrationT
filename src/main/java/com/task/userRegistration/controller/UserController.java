@@ -37,9 +37,7 @@ public class UserController {
     @PostMapping(value = "/users")
     public String saveUser(@ModelAttribute @Valid User user, Errors errors) {
 
-        User retrievedUser = userService.findByUsername(user.getUsername());
-
-        if (retrievedUser != null) {
+        if (userService.isUserAlreadyPresent(user)) {
             errors.rejectValue("username", USERNAME_EXISTS_CODE, USERNAME_EXISTS_MESSAGE);
         }
 

@@ -29,7 +29,6 @@ public class PasswordConstraintValidator implements ConstraintValidator<ValidPas
                 validator.getMessages(result).get(0))
                 .addConstraintViolation();
 
-
         return false;
     }
 }
